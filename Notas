@@ -7,6 +7,34 @@ http://localhost/Taller_Mecanico/
 // ============================================================
 Para subir todo a GitHub:
 git add .
-git commit -m "Dashboard y logout completados"
+git commit -m "lo nuevo que agregaste"
 git push
 // ============================================================
+//
+✅ Completado
+✅ Base de datos (SQL)
+✅ Conexión (database.php)
+✅ Login (index.php)
+✅ Dashboard
+✅ CSS/JS separados (estructura profesional)
+✅ Módulo Clientes y Vehículos
+//
+//
+Falta por hacer
+⏳ Módulo Inventario         ← SIGUIENTE
+⏳ Módulo Precios y Servicios
+⏳ Módulo Órdenes de Trabajo  ← El más importante
+⏳ Módulo Boletas y Facturas
+⏳ Módulo Reportes
+⏳ includes/header.php        (menú reutilizable)
+⏳ includes/auth.php          (seguridad)
+//
+//
+3. En la primera mensaje del proyecto pega esto:
+Estamos desarrollando el Sistema de Gestión para Taller 
+Mecánico en PHP + MySQL + XAMPP. Ya tenemos:
+- Base de datos creada
+- Login, Dashboard, CSS separados
+- Módulo de Clientes y Vehículos
+Continuamos con el módulo de Inventario.
+//

@@ -1,0 +1,12 @@
+//
+http://localhost/Taller_Mecanico/
+//
+
+
+
+// ============================================================
+Para subir todo a GitHub:
+git add .
+git commit -m "Dashboard y logout completados"
+git push
+// ============================================================

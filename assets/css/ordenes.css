@@ -1,0 +1,229 @@
+/* ============================================================
+   assets/css/ordenes.css — Módulo Órdenes de Trabajo
+   ============================================================ */
+
+/* ── Tarjetas resumen ── */
+.ord-resumen {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.ord-card {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--sombra);
+  transition: transform .2s;
+  cursor: pointer; text-decoration: none;
+}
+.ord-card:hover { transform: translateY(-2px); box-shadow: var(--sombra-hover); }
+.ord-card-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: #fff; flex-shrink: 0;
+}
+.ord-card-num {
+  display: block; font-family: var(--font-title);
+  font-size: 22px; font-weight: 700; color: var(--texto); line-height: 1;
+}
+.ord-card-label { font-size: 11px; color: var(--texto-muted); }
+
+/* Colores por estado */
+.bg-abierta  { background: linear-gradient(135deg, var(--azul-acento), #1860a0); }
+.bg-proceso  { background: linear-gradient(135deg, var(--amarillo), #d68910); }
+.bg-lista    { background: linear-gradient(135deg, var(--verde), #1e8449); }
+.bg-cobrada  { background: linear-gradient(135deg, var(--morado), #7d3c98); }
+.bg-naranja  { background: linear-gradient(135deg, var(--naranja), #c0620a); }
+
+/* ── Filtro de estados (tabs) ── */
+.estado-tabs {
+  display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.estado-tab {
+  padding: 7px 16px; border-radius: 20px; font-size: 13px;
+  font-weight: 600; text-decoration: none; border: 1px solid var(--borde);
+  color: var(--texto-muted); background: #fff; transition: all .2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.estado-tab:hover { border-color: var(--azul-acento); color: var(--azul-acento); }
+.estado-tab.active { background: var(--azul-acento); color: #fff; border-color: var(--azul-acento); }
+.estado-tab.active-amarillo { background: var(--amarillo); border-color: var(--amarillo); color: #fff; }
+.estado-tab.active-verde    { background: var(--verde);    border-color: var(--verde);    color: #fff; }
+.estado-tab.active-morado   { background: var(--morado);   border-color: var(--morado);   color: #fff; }
+
+/* ── Número de orden ── */
+.ord-numero {
+  font-family: var(--font-title); font-size: 15px;
+  font-weight: 700; color: var(--azul-acento);
+}
+
+/* ── Info vehículo en tabla ── */
+.veh-info { display: flex; flex-direction: column; }
+.veh-placa {
+  font-family: var(--font-title); font-size: 14px; font-weight: 700;
+  color: var(--texto); letter-spacing: 1px;
+}
+.veh-modelo { font-size: 11px; color: var(--texto-muted); }
+
+/* ── Acciones ── */
+.acciones { display: flex; gap: 6px; }
+.btn-accion {
+  width: 30px; height: 30px; border-radius: 7px;
+  border: 1px solid var(--borde); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 13px; text-decoration: none;
+  transition: all .2s; color: var(--texto-muted); background: #fff;
+}
+.btn-accion.ver:hover    { background: var(--azul-acento); color:#fff; border-color:var(--azul-acento); }
+.btn-accion.editar:hover { background: var(--naranja);     color:#fff; border-color:var(--naranja); }
+.btn-accion.eliminar:hover{ background: var(--rojo);       color:#fff; border-color:var(--rojo); }
+
+/* ═══════════════════════════
+   DETALLE DE ORDEN (ver.php)
+═══════════════════════════ */
+.orden-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Panel de estado/info lateral */
+.orden-sidebar-panel {
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* Header de la orden */
+.orden-header {
+  background: #fff; border: 1px solid var(--borde);
+  border-radius: 14px; padding: 22px 24px;
+  box-shadow: var(--sombra);
+}
+.orden-num-grande {
+  font-family: var(--font-title); font-size: 28px;
+  font-weight: 700; color: var(--texto);
+}
+.orden-meta {
+  display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px;
+}
+.orden-meta-item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; color: var(--texto-muted);
+}
+.orden-meta-item i { color: var(--azul-acento); width: 14px; }
+.orden-meta-item strong { color: var(--texto); }
+
+/* Pasos de estado */
+.estado-stepper {
+  display: flex; align-items: center; margin: 20px 0 0;
+}
+.step {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 5px; flex: 1;
+}
+.step-circle {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 2px solid var(--borde); background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--texto-muted); font-weight: 700;
+  transition: all .3s;
+}
+.step-label { font-size: 10px; color: var(--texto-muted); text-align: center; }
+.step-line { flex: 1; height: 2px; background: var(--borde); margin-bottom: 18px; }
+
+/* Estados del stepper */
+.step.done .step-circle  { background: var(--verde);       border-color: var(--verde);       color: #fff; }
+.step.done .step-label   { color: var(--verde); font-weight:600; }
+.step.active .step-circle{ background: var(--azul-acento); border-color: var(--azul-acento); color: #fff; }
+.step.active .step-label { color: var(--azul-acento); font-weight:600; }
+.step-line.done { background: var(--verde); }
+
+/* Panel de datos (lado derecho) */
+.info-panel {
+  background: #fff; border: 1px solid var(--borde);
+  border-radius: 14px; padding: 20px;
+  box-shadow: var(--sombra);
+}
+.info-panel h4 {
+  font-size: 13px; font-weight: 700; color: var(--texto);
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--borde);
+  display: flex; align-items: center; gap: 7px;
+}
+.info-panel h4 i { color: var(--azul-acento); }
+.info-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px; padding: 6px 0;
+  border-bottom: 1px solid var(--borde);
+}
+.info-row:last-child { border-bottom: none; }
+.info-row span:first-child { color: var(--texto-muted); }
+.info-row span:last-child  { color: var(--texto); font-weight: 500; }
+
+/* Botones de cambio de estado */
+.btn-estado {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; width: 100%; padding: 11px;
+  border-radius: 9px; border: none; cursor: pointer;
+  font-family: var(--font-main); font-size: 13px; font-weight: 600;
+  transition: all .2s; text-decoration: none;
+  margin-bottom: 8px;
+}
+.btn-estado:last-child { margin-bottom: 0; }
+.btn-en-proceso { background: rgba(243,156,18,.1); color: var(--amarillo); border: 1px solid rgba(243,156,18,.3); }
+.btn-en-proceso:hover { background: var(--amarillo); color: #fff; }
+.btn-lista      { background: rgba(39,174,96,.1);  color: var(--verde);   border: 1px solid rgba(39,174,96,.3); }
+.btn-lista:hover{ background: var(--verde);   color: #fff; }
+.btn-anular     { background: rgba(231,76,60,.07); color: var(--rojo);    border: 1px solid rgba(231,76,60,.2); }
+.btn-anular:hover { background: var(--rojo);   color: #fff; }
+
+/* ── Items de la orden ── */
+.items-section {
+  background: #fff; border: 1px solid var(--borde);
+  border-radius: 14px; box-shadow: var(--sombra); overflow: hidden;
+}
+.items-header {
+  padding: 18px 22px; border-bottom: 1px solid var(--borde);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.items-header h3 { font-size: 15px; font-weight: 600; color: var(--texto); display:flex;align-items:center;gap:8px; }
+.items-header h3 i { color: var(--azul-acento); }
+
+/* Formulario inline de agregar ítem */
+.add-item-form {
+  padding: 16px 22px; background: var(--fondo);
+  border-bottom: 1px solid var(--borde);
+  display: grid;
+  grid-template-columns: 120px 1fr 80px 120px auto;
+  gap: 10px; align-items: end;
+}
+.add-item-form.hidden { display: none; }
+
+/* Totales */
+.orden-totales {
+  padding: 16px 22px; border-top: 1px solid var(--borde);
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+}
+.total-row {
+  display: flex; gap: 40px; font-size: 13px;
+}
+.total-row span:first-child { color: var(--texto-muted); }
+.total-row span:last-child  { font-weight: 600; min-width: 80px; text-align: right; }
+.total-row.total-final span { font-size: 16px; font-family: var(--font-title); color: var(--texto); }
+
+/* Tipo badge en tabla de items */
+.tipo-prod { background:rgba(29,111,164,0.1);  color:var(--azul-acento); }
+.tipo-serv { background:rgba(39,174,96,0.1);   color:var(--verde); }
+
+/* Responsive */
+@media(max-width: 1100px) {
+  .orden-layout { grid-template-columns: 1fr; }
+  .ord-resumen  { grid-template-columns: repeat(3,1fr); }
+}
+@media(max-width: 768px) {
+  .ord-resumen { grid-template-columns: 1fr 1fr; }
+  .add-item-form { grid-template-columns: 1fr 1fr; }
+}

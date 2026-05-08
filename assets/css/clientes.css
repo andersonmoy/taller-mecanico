@@ -1,0 +1,210 @@
+/* ============================================================
+   assets/css/clientes.css
+   Estilos exclusivos del módulo Clientes y Vehículos
+   ============================================================ */
+
+/* ── Barra de búsqueda y filtros ── */
+.filtros-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.search-wrapper i {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--texto-muted);
+  font-size: 14px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font-main);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  background: #fff;
+  color: var(--texto);
+}
+
+.search-input:focus {
+  border-color: var(--azul-acento);
+  box-shadow: 0 0 0 3px rgba(29,111,164,0.1);
+}
+
+/* ── Tarjeta de cliente en lista ── */
+.cliente-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.avatar-natural  { background: var(--azul-acento); }
+.avatar-empresa  { background: var(--morado); }
+
+.cliente-nombre  { font-weight: 600; font-size: 14px; }
+.cliente-dni     { font-size: 12px; color: var(--texto-muted); margin-top: 2px; }
+
+/* ── Acciones de tabla ── */
+.acciones {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.btn-accion {
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: all .2s;
+}
+
+.btn-accion.editar  { background: rgba(29,111,164,0.1); color: var(--azul-acento); }
+.btn-accion.ver     { background: rgba(39,174,96,0.1);  color: var(--verde); }
+.btn-accion.eliminar{ background: rgba(231,76,60,0.1);  color: var(--rojo); }
+
+.btn-accion.editar:hover   { background: var(--azul-acento); color: #fff; }
+.btn-accion.ver:hover      { background: var(--verde);        color: #fff; }
+.btn-accion.eliminar:hover { background: var(--rojo);         color: #fff; }
+
+/* ── Vehículos del cliente ── */
+.vehiculo-card {
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 18px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: box-shadow .2s, transform .2s;
+  margin-bottom: 12px;
+}
+
+.vehiculo-card:hover {
+  box-shadow: var(--sombra-hover);
+  transform: translateY(-2px);
+}
+
+.vehiculo-icon {
+  width: 52px; height: 52px;
+  background: rgba(29,111,164,0.1);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  color: var(--azul-acento);
+  flex-shrink: 0;
+}
+
+.vehiculo-info { flex: 1; }
+.vehiculo-placa {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--azul-oscuro);
+  background: var(--fondo);
+  padding: 2px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.vehiculo-detalle { font-size: 13px; color: var(--texto-muted); }
+.vehiculo-detalle span { color: var(--texto); font-weight: 500; }
+
+/* ── Página de detalle cliente ── */
+.cliente-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.cliente-avatar-lg {
+  width: 72px; height: 72px;
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.cliente-header-info h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--texto);
+  margin-bottom: 4px;
+}
+
+/* ── Formulario ── */
+.form-section {
+  margin-bottom: 28px;
+}
+
+.form-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--azul-acento);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(29,111,164,0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Stats del cliente ── */
+.cliente-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.cliente-stat {
+  background: var(--fondo);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  border: 1px solid var(--borde);
+}
+
+.cliente-stat .num {
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--azul-acento);
+}
+
+.cliente-stat .lbl {
+  font-size: 11px;
+  color: var(--texto-muted);
+  margin-top: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .filtros-bar { flex-direction: column; align-items: stretch; }
+  .cliente-stats { grid-template-columns: 1fr 1fr; }
+}

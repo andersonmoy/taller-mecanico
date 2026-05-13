@@ -2,15 +2,12 @@
 // ============================================================
 //  modules/inventario/index.php — Lista de Productos
 // ============================================================
-session_start();
+require_once '../../includes/auth.php';
 require_once '../../config/database.php';
-if (!isset($_SESSION['usuario_id'])) { header('Location: ../../index.php'); exit; }
 
-$rol    = $_SESSION['usuario_rol'];
-$nombre = $_SESSION['usuario_nombre'];
 
 // ── Desactivar producto (soft delete) ──
-if (isset($_GET['desactivar']) && $rol === 'administrador') {
+if (isset($_GET['desactivar']) && esRol('administrador')) {
     $id = (int)$_GET['desactivar'];
     dbQuery("UPDATE productos SET activo = 0 WHERE id = ?", [$id]);
     header('Location: index.php?msg=desactivado'); exit;
@@ -58,65 +55,14 @@ $resumen = dbQuery("
 
 $msg = $_GET['msg'] ?? '';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventario — <?= APP_NAME ?></title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="stylesheet" href="../../assets/css/inventario.css">
-</head>
-<body>
 
-<!-- ══ SIDEBAR ══ -->
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="icon"><i class="fas fa-wrench"></i></div>
-    <div><h2><?= APP_NAME ?></h2><span>v<?= APP_VERSION ?></span></div>
-  </div>
-  <nav class="sidebar-menu">
-    <div class="menu-section">Principal</div>
-    <a href="../../dashboard.php" class="menu-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
-    <div class="menu-section">Operaciones</div>
-    <a href="../ordenes/index.php"      class="menu-item"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a>
-    <a href="../clientes/index.php"     class="menu-item"><i class="fas fa-users"></i> Clientes y Vehículos</a>
-    <a href="../comprobantes/index.php" class="menu-item"><i class="fas fa-file-invoice"></i> Boletas y Facturas</a>
-    <div class="menu-section">Almacén</div>
-    <a href="index.php"                 class="menu-item active"><i class="fas fa-boxes-stacked"></i> Inventario</a>
-    <a href="../precios/index.php"      class="menu-item"><i class="fas fa-tags"></i> Precios y Servicios</a>
-    <?php if ($rol === 'administrador'): ?>
-    <div class="menu-section">Administración</div>
-    <a href="../reportes/index.php"     class="menu-item"><i class="fas fa-chart-bar"></i> Reportes</a>
-    <?php endif; ?>
-  </nav>
-  <div class="sidebar-user">
-    <div class="user-avatar"><?= strtoupper(substr($nombre, 0, 1)) ?></div>
-    <div class="user-info">
-      <strong><?= htmlspecialchars($nombre) ?></strong>
-      <span><?= $rol ?></span>
-    </div>
-    <a href="../../logout.php" class="btn-logout"><i class="fas fa-right-from-bracket"></i></a>
-  </div>
-</aside>
-
-<!-- ══ CONTENIDO PRINCIPAL ══ -->
-<div class="main">
-  <header class="topbar">
-    <h1><i class="fas fa-boxes-stacked"></i> Inventario de Productos</h1>
-    <div class="topbar-right">
-      <span class="topbar-date"><i class="fas fa-calendar-day"></i> <?= date('d/m/Y') ?></span>
-      <a href="movimientos.php" class="btn btn-outline"><i class="fas fa-clock-rotate-left"></i> Movimientos</a>
-      <?php if ($rol !== 'mecanico'): ?>
-      <a href="crear.php" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Producto</a>
-      <?php endif; ?>
-    </div>
-  </header>
-
-  <div class="content">
+$PAGE_TITLE  = 'Inventario de Productos';
+$PAGE_ICON   = 'fa-boxes-stacked';
+$ACTIVE_MENU = 'inventario';
+$TOPBAR_ACTIONS = '<a href="movimientos.php" class="btn btn-outline"><i class="fas fa-clock-rotate-left"></i> Movimientos</a><a href="iot.php" class="btn btn-outline"><i class="fas fa-microchip"></i> Monitor IoT</a><a href="crear.php" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Producto</a>';
+require_once '../../includes/header.php';
+?>
+<link rel="stylesheet" href="../../assets/css/inventario.css">
 
     <!-- Alertas de mensaje -->
     <?php if ($msg === 'creado'):   ?><div class="alert alert-success alert-auto"><i class="fas fa-check-circle"></i> Producto registrado correctamente.</div><?php endif; ?>
@@ -269,12 +215,12 @@ $msg = $_GET['msg'] ?? '';
                   <a href="ajuste.php?id=<?= $p['id'] ?>" class="btn-accion ver" title="Ajustar stock">
                     <i class="fas fa-sliders"></i>
                   </a>
-                  <?php if ($rol !== 'mecanico'): ?>
+                  <?php if (!esRol('mecanico')): ?>
                   <a href="editar.php?id=<?= $p['id'] ?>" class="btn-accion editar" title="Editar">
                     <i class="fas fa-pen"></i>
                   </a>
                   <?php endif; ?>
-                  <?php if ($rol === 'administrador'): ?>
+                  <?php if (esRol('administrador')): ?>
                   <a href="index.php?desactivar=<?= $p['id'] ?>"
                      class="btn-accion eliminar" title="Desactivar"
                      onclick="return confirm('¿Desactivar el producto «<?= htmlspecialchars(addslashes($p['nombre'])) ?>»?')">
@@ -291,8 +237,7 @@ $msg = $_GET['msg'] ?? '';
       <?php endif; ?>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
+<?php require_once '../../includes/footer.php'; ?>
 
 <script src="../../assets/js/main.js"></script>
 <script>

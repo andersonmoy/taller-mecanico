@@ -120,61 +120,18 @@ $idx_actual    = array_search($estado_actual, $estados_orden);
 
 $msg = $_GET['msg'] ?? '';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= htmlspecialchars($orden['numero']) ?> — <?= APP_NAME ?></title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="stylesheet" href="../../assets/css/ordenes.css">
-</head>
-<body>
 
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="icon"><i class="fas fa-wrench"></i></div>
-    <div><h2><?= APP_NAME ?></h2><span>v<?= APP_VERSION ?></span></div>
-  </div>
-  <nav class="sidebar-menu">
-    <div class="menu-section">Principal</div>
-    <a href="../../dashboard.php" class="menu-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
-    <div class="menu-section">Operaciones</div>
-    <a href="index.php"                class="menu-item active"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a>
-    <a href="../clientes/index.php"    class="menu-item"><i class="fas fa-users"></i> Clientes y Vehículos</a>
-    <a href="../comprobantes/index.php"class="menu-item"><i class="fas fa-file-invoice"></i> Boletas y Facturas</a>
-    <div class="menu-section">Almacén</div>
-    <a href="../inventario/index.php"  class="menu-item"><i class="fas fa-boxes-stacked"></i> Inventario</a>
-    <a href="../precios/index.php"     class="menu-item"><i class="fas fa-tags"></i> Precios y Servicios</a>
-    <?php if ($rol === 'administrador'): ?>
-    <div class="menu-section">Administración</div>
-    <a href="../reportes/index.php"    class="menu-item"><i class="fas fa-chart-bar"></i> Reportes</a>
-    <?php endif; ?>
-  </nav>
-  <div class="sidebar-user">
-    <div class="user-avatar"><?= strtoupper(substr($nombre, 0, 1)) ?></div>
-    <div class="user-info"><strong><?= htmlspecialchars($nombre) ?></strong><span><?= $rol ?></span></div>
-    <a href="../../logout.php" class="btn-logout"><i class="fas fa-right-from-bracket"></i></a>
-  </div>
-</aside>
+$PAGE_TITLE  = ''; // Set per order
+$PAGE_ICON   = 'fa-clipboard-list';
+$ACTIVE_MENU = 'ordenes';
+$TOPBAR_ACTIONS = (isset($orden) && $orden['estado']==='lista')
+    ? '<a href="../comprobantes/crear.php?orden_id='.$id.'" class="btn btn-naranja"><i class="fas fa-file-invoice"></i> Emitir Comprobante</a><a href="index.php" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>'
+    : '<a href="index.php" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>';
+// Override title after loading order
+require_once '../../includes/header.php';
+?>
+<link rel="stylesheet" href="../../assets/css/ordenes.css">
 
-<div class="main">
-  <header class="topbar">
-    <h1><i class="fas fa-clipboard-list"></i> <?= htmlspecialchars($orden['numero']) ?></h1>
-    <div class="topbar-right">
-      <?php if ($orden['estado'] === 'lista'): ?>
-      <a href="../comprobantes/crear.php?orden_id=<?= $id ?>" class="btn btn-naranja">
-        <i class="fas fa-file-invoice"></i> Emitir Comprobante
-      </a>
-      <?php endif; ?>
-      <a href="index.php" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
-    </div>
-  </header>
-
-  <div class="content">
     <?php if ($msg === 'creada'): ?>
       <div class="alert alert-success alert-auto"><i class="fas fa-check-circle"></i> Orden creada. Ahora agrega productos y servicios.</div>
     <?php endif; ?>
@@ -384,11 +341,7 @@ $msg = $_GET['msg'] ?? '';
           <div class="info-row"><span>Color</span><span><?= htmlspecialchars($orden['color'] ?? '—') ?></span></div>
           <div class="info-row"><span>KM ingreso</span><span><?= number_format($orden['km_ingreso']) ?> km</span></div>
         </div>
-
-      </div><!-- /col derecha -->
-    </div><!-- /orden-layout -->
-  </div>
-</div>
+<?php require_once '../../includes/footer.php'; ?>
 
 <!-- Datos para JS -->
 <script>

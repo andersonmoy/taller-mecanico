@@ -107,57 +107,14 @@ $productos_bajos = dbQuery("
     WHERE p.activo = 1 AND p.stock_actual <= p.stock_minimo
     ORDER BY p.stock_actual ASC LIMIT 8") ?: [];
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reportes — <?= APP_NAME ?></title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="stylesheet" href="../../assets/css/reportes.css">
-</head>
-<body>
 
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="icon"><i class="fas fa-wrench"></i></div>
-    <div><h2><?= APP_NAME ?></h2><span>v<?= APP_VERSION ?></span></div>
-  </div>
-  <nav class="sidebar-menu">
-    <div class="menu-section">Principal</div>
-    <a href="../../dashboard.php"      class="menu-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
-    <div class="menu-section">Operaciones</div>
-    <a href="../ordenes/index.php"     class="menu-item"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a>
-    <a href="../clientes/index.php"    class="menu-item"><i class="fas fa-users"></i> Clientes y Vehículos</a>
-    <a href="../comprobantes/index.php"class="menu-item"><i class="fas fa-file-invoice"></i> Boletas y Facturas</a>
-    <div class="menu-section">Almacén</div>
-    <a href="../inventario/index.php"  class="menu-item"><i class="fas fa-boxes-stacked"></i> Inventario</a>
-    <a href="../precios/index.php"     class="menu-item"><i class="fas fa-tags"></i> Precios y Servicios</a>
-    <div class="menu-section">Administración</div>
-    <a href="index.php"                class="menu-item active"><i class="fas fa-chart-bar"></i> Reportes</a>
-  </nav>
-  <div class="sidebar-user">
-    <div class="user-avatar"><?= strtoupper(substr($nombre, 0, 1)) ?></div>
-    <div class="user-info">
-      <strong><?= htmlspecialchars($nombre) ?></strong>
-      <span><?= $rol ?></span>
-    </div>
-    <a href="../../logout.php" class="btn-logout"><i class="fas fa-right-from-bracket"></i></a>
-  </div>
-</aside>
-
-<div class="main">
-  <header class="topbar">
-    <h1><i class="fas fa-chart-bar"></i> Reportes y Estadísticas</h1>
-    <div class="topbar-right">
-      <span class="topbar-date"><i class="fas fa-calendar-day"></i> <?= date('d/m/Y') ?></span>
-    </div>
-  </header>
-
-  <div class="content">
+$PAGE_TITLE  = 'Reportes y Estadísticas';
+$PAGE_ICON   = 'fa-chart-bar';
+$ACTIVE_MENU = 'reportes';
+$TOPBAR_ACTIONS = '';
+require_once '../../includes/header.php';
+?>
+<link rel="stylesheet" href="../../assets/css/reportes.css">
 
     <!-- Filtro de año -->
     <div class="reporte-filtro">
@@ -174,6 +131,24 @@ $productos_bajos = dbQuery("
       <span style="font-size:12px;color:var(--texto-muted);margin-left:auto">
         Mostrando datos del año <strong><?= $anio ?></strong>
       </span>
+
+    <!-- Botones de exportar -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+      <a href="exportar.php?tipo=ordenes&anio=<?= $anio ?>" class="btn btn-verde">
+        <i class="fas fa-file-csv"></i> Exportar Órdenes
+      </a>
+      <a href="exportar.php?tipo=comprobantes&anio=<?= $anio ?>" class="btn btn-verde">
+        <i class="fas fa-file-csv"></i> Exportar Comprobantes
+      </a>
+      <a href="exportar.php?tipo=inventario" class="btn btn-verde">
+        <i class="fas fa-file-csv"></i> Exportar Inventario
+      </a>
+      <a href="exportar.php?tipo=movimientos&anio=<?= $anio ?>" class="btn btn-verde">
+        <i class="fas fa-file-csv"></i> Exportar Movimientos
+      </a>
+      <a href="exportar.php?tipo=clientes" class="btn btn-verde">
+        <i class="fas fa-file-csv"></i> Exportar Clientes
+      </a>
     </div>
 
     <!-- ══ KPIs ══ -->

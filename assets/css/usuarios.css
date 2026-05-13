@@ -1,0 +1,85 @@
+/* ============================================================
+   assets/css/usuarios.css — Módulo Gestión de Usuarios
+   ============================================================ */
+
+/* ── Resumen tarjetas ── */
+.usu-resumen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* ── Fila inactiva en tabla ── */
+.usu-inactivo td { opacity: 0.5; }
+
+/* ── Avatar en tabla ── */
+.usu-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--azul-acento), #1860a0);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 15px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Selector de rol ── */
+.usu-rol-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.usu-rol-btn {
+  padding: 16px 12px;
+  border: 2px solid var(--borde);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+  background: #fff;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.usu-rol-btn input { display: none; }
+
+.usu-rol-btn i    { font-size: 22px; }
+.usu-rol-btn span { font-size: 13px; font-weight: 700; color: var(--texto); }
+.usu-rol-btn small{ font-size: 11px; color: var(--texto-muted); line-height: 1.4; }
+
+/* Colores por rol */
+.usu-rol-btn:nth-child(1) i { color: var(--verde); }
+.usu-rol-btn:nth-child(2) i { color: var(--amarillo); }
+.usu-rol-btn:nth-child(3) i { color: var(--morado); }
+
+.usu-rol-btn:has(input:checked) {
+  border-color: var(--azul-acento);
+  background: rgba(29,111,164,0.05);
+}
+.usu-rol-btn:nth-child(1):has(input:checked) { border-color:var(--verde);   background:rgba(39,174,96,0.05); }
+.usu-rol-btn:nth-child(2):has(input:checked) { border-color:var(--amarillo);background:rgba(243,156,18,0.05); }
+.usu-rol-btn:nth-child(3):has(input:checked) { border-color:var(--morado);  background:rgba(142,68,173,0.05); }
+
+/* ── Campo de contraseña con toggle ── */
+.pass-wrapper {
+  position: relative;
+}
+.pass-wrapper .form-control {
+  padding-right: 42px;
+}
+.pass-toggle {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: var(--texto-muted);
+  cursor: pointer; font-size: 14px;
+  transition: color .2s;
+  padding: 4px;
+}
+.pass-toggle:hover { color: var(--azul-acento); }
+
+/* Responsive */
+@media(max-width: 900px) {
+  .usu-resumen  { grid-template-columns: 1fr 1fr; }
+  .usu-rol-grid { grid-template-columns: 1fr; }
+}

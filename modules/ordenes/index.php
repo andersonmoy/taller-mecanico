@@ -2,12 +2,9 @@
 // ============================================================
 //  modules/ordenes/index.php — Lista de Órdenes de Trabajo
 // ============================================================
-session_start();
+require_once '../../includes/auth.php';
 require_once '../../config/database.php';
-if (!isset($_SESSION['usuario_id'])) { header('Location: ../../index.php'); exit; }
 
-$rol    = $_SESSION['usuario_rol'];
-$nombre = $_SESSION['usuario_nombre'];
 
 // ── Filtros ──
 $estado  = $_GET['estado']  ?? '';
@@ -39,60 +36,14 @@ foreach ($rows as $r) $conteos[$r['estado']] = $r['n'];
 
 $msg = $_GET['msg'] ?? '';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Órdenes de Trabajo — <?= APP_NAME ?></title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="stylesheet" href="../../assets/css/ordenes.css">
-</head>
-<body>
 
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="icon"><i class="fas fa-wrench"></i></div>
-    <div><h2><?= APP_NAME ?></h2><span>v<?= APP_VERSION ?></span></div>
-  </div>
-  <nav class="sidebar-menu">
-    <div class="menu-section">Principal</div>
-    <a href="../../dashboard.php" class="menu-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
-    <div class="menu-section">Operaciones</div>
-    <a href="index.php"                class="menu-item active"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a>
-    <a href="../clientes/index.php"    class="menu-item"><i class="fas fa-users"></i> Clientes y Vehículos</a>
-    <a href="../comprobantes/index.php"class="menu-item"><i class="fas fa-file-invoice"></i> Boletas y Facturas</a>
-    <div class="menu-section">Almacén</div>
-    <a href="../inventario/index.php"  class="menu-item"><i class="fas fa-boxes-stacked"></i> Inventario</a>
-    <a href="../precios/index.php"     class="menu-item"><i class="fas fa-tags"></i> Precios y Servicios</a>
-    <?php if ($rol === 'administrador'): ?>
-    <div class="menu-section">Administración</div>
-    <a href="../reportes/index.php"    class="menu-item"><i class="fas fa-chart-bar"></i> Reportes</a>
-    <?php endif; ?>
-  </nav>
-  <div class="sidebar-user">
-    <div class="user-avatar"><?= strtoupper(substr($nombre, 0, 1)) ?></div>
-    <div class="user-info">
-      <strong><?= htmlspecialchars($nombre) ?></strong>
-      <span><?= $rol ?></span>
-    </div>
-    <a href="../../logout.php" class="btn-logout"><i class="fas fa-right-from-bracket"></i></a>
-  </div>
-</aside>
-
-<div class="main">
-  <header class="topbar">
-    <h1><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</h1>
-    <div class="topbar-right">
-      <span class="topbar-date"><i class="fas fa-calendar-day"></i> <?= date('d/m/Y') ?></span>
-      <a href="crear.php" class="btn btn-primary"><i class="fas fa-plus"></i> Nueva Orden</a>
-    </div>
-  </header>
-
-  <div class="content">
+$PAGE_TITLE  = 'Órdenes de Trabajo';
+$PAGE_ICON   = 'fa-clipboard-list';
+$ACTIVE_MENU = 'ordenes';
+$TOPBAR_ACTIONS = '<a href="crear.php" class="btn btn-primary"><i class="fas fa-plus"></i> Nueva Orden</a>';
+require_once '../../includes/header.php';
+?>
+<link rel="stylesheet" href="../../assets/css/ordenes.css">
 
     <?php if ($msg === 'creada'): ?><div class="alert alert-success alert-auto"><i class="fas fa-check-circle"></i> Orden creada correctamente.</div><?php endif; ?>
     <?php if ($msg === 'anulada'): ?><div class="alert alert-error alert-auto"><i class="fas fa-ban"></i> Orden anulada.</div><?php endif; ?>
@@ -235,9 +186,7 @@ $msg = $_GET['msg'] ?? '';
       <?php endif; ?>
     </div>
 
-  </div>
-</div>
-
+<?php require_once '../../includes/footer.php'; ?>
 <script src="../../assets/js/main.js"></script>
 <script>
 document.querySelectorAll('.alert-auto').forEach(el => {

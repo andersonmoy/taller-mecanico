@@ -2,12 +2,9 @@
 // ============================================================
 //  modules/ordenes/crear.php — Nueva Orden de Trabajo
 // ============================================================
-session_start();
+require_once '../../includes/auth.php';
 require_once '../../config/database.php';
-if (!isset($_SESSION['usuario_id'])) { header('Location: ../../index.php'); exit; }
 
-$rol    = $_SESSION['usuario_rol'];
-$nombre = $_SESSION['usuario_nombre'];
 $error  = '';
 
 $clientes  = dbQuery("SELECT id, nombre, dni_ruc FROM clientes ORDER BY nombre") ?: [];
@@ -55,56 +52,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar'])) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nueva Orden — <?= APP_NAME ?></title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="stylesheet" href="../../assets/css/ordenes.css">
-</head>
-<body>
 
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="icon"><i class="fas fa-wrench"></i></div>
-    <div><h2><?= APP_NAME ?></h2><span>v<?= APP_VERSION ?></span></div>
-  </div>
-  <nav class="sidebar-menu">
-    <div class="menu-section">Principal</div>
-    <a href="../../dashboard.php" class="menu-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
-    <div class="menu-section">Operaciones</div>
-    <a href="index.php"                class="menu-item active"><i class="fas fa-clipboard-list"></i> Órdenes de Trabajo</a>
-    <a href="../clientes/index.php"    class="menu-item"><i class="fas fa-users"></i> Clientes y Vehículos</a>
-    <a href="../comprobantes/index.php"class="menu-item"><i class="fas fa-file-invoice"></i> Boletas y Facturas</a>
-    <div class="menu-section">Almacén</div>
-    <a href="../inventario/index.php"  class="menu-item"><i class="fas fa-boxes-stacked"></i> Inventario</a>
-    <a href="../precios/index.php"     class="menu-item"><i class="fas fa-tags"></i> Precios y Servicios</a>
-    <?php if ($rol === 'administrador'): ?>
-    <div class="menu-section">Administración</div>
-    <a href="../reportes/index.php"    class="menu-item"><i class="fas fa-chart-bar"></i> Reportes</a>
-    <?php endif; ?>
-  </nav>
-  <div class="sidebar-user">
-    <div class="user-avatar"><?= strtoupper(substr($nombre, 0, 1)) ?></div>
-    <div class="user-info"><strong><?= htmlspecialchars($nombre) ?></strong><span><?= $rol ?></span></div>
-    <a href="../../logout.php" class="btn-logout"><i class="fas fa-right-from-bracket"></i></a>
-  </div>
-</aside>
+$PAGE_TITLE  = 'Nueva Orden de Trabajo';
+$PAGE_ICON   = 'fa-plus';
+$ACTIVE_MENU = 'ordenes';
+$TOPBAR_ACTIONS = '<a href="index.php" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>';
+require_once '../../includes/header.php';
+?>
+<link rel="stylesheet" href="../../assets/css/ordenes.css">
 
-<div class="main">
-  <header class="topbar">
-    <h1><i class="fas fa-plus"></i> Nueva Orden de Trabajo</h1>
-    <div class="topbar-right">
-      <a href="index.php" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Volver</a>
-    </div>
-  </header>
-
-  <div class="content">
     <?php if ($error): ?>
       <div class="alert alert-error"><i class="fas fa-circle-exclamation"></i> <?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
@@ -190,9 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar'])) {
         </form>
       </div>
     </div>
-  </div>
-</div>
 
+<?php require_once '../../includes/footer.php'; ?>
 <script>
 // Carga dinámica de vehículos al cambiar cliente
 function cargarVehiculos() {
